@@ -1,5 +1,7 @@
 package com.example.brom.webviewapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,12 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
     // Create a private member variable that can hold our WebView
 
-
+    WebView myWebView;
+    WebView internalWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +38,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        WebView webView = new WebView(this);
+        WebViewClient webClient = new WebViewClient();
 
-        setContentView(webView);
+        myWebView = (WebView)findViewById(R.id.my_webview);
 
-        //webView.loadUrl("http://wwwlab.iit.his.se/a18conch/Webbsida-dice/");
-        webView.loadUrl("file:///android_asset/about.html");
+        myWebView.getSettings().setJavaScriptEnabled(true);
+
+        myWebView.setWebViewClient(webClient);
+
+        myWebView.loadUrl("http://wwwlab.iit.his.se/a18conch/Webbsida-dice/");
+
+        internalWebView = (WebView)findViewById(R.id.internal_webView);
+        internalWebView.loadUrl("file:///android_asset/about.html");
+        //webView.loadUrl("file:///android_asset/about.html");
 
         // 0. Enable Internet access for your App
         // 1. Create a WebView element in the layout file content_main.xml
